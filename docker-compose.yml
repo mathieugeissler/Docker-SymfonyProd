@@ -1,8 +1,8 @@
 application:
     build: code
     volumes:
-        - ./symfony:/var/www/symfony
-        - ./logs/symfony:/var/www/symfony/app/logs
+        - ./symfony:/var/www/Rezo/symfony
+        - ./logs/symfony:/var/www/Rezo/symfony/app/logs
     tty: true
 db:
     image: mysql
@@ -10,9 +10,7 @@ db:
         - 3306:3306
     environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: symfony
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
+        MYSQL_DATABASE: Rezo
 php:
     build: php-fpm
     expose:
@@ -31,14 +29,3 @@ nginx:
         - application
     volumes:
         - ./logs/nginx/:/var/log/nginx
-elk:
-    image: willdurand/elk
-    ports:
-        - 81:80
-    volumes:
-        - ./elk/logstash:/etc/logstash
-        - ./elk/logstash/patterns:/opt/logstash/patterns
-    volumes_from:
-        - application
-        - php
-        - nginx
